@@ -1,6 +1,7 @@
 package org.example;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -8,9 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ZooAccountingLog {
+    private static final Logger logger = LogManager.getLogger(ZooAccountingLog.class);
 
     // Животное, которое съело больше всего корма за последний месяц
     public Optional<AnimalClass> findAnimalMostEatLastMonth(List<Entry> entryList) {
+        logger.info("Поиск животного, которое съело больше всего корма за последний месяц.");
 
         LocalDate lastMonth = LocalDate.now().minusMonths(1);
 
@@ -26,7 +29,7 @@ public class ZooAccountingLog {
 
     //  Найти месяц, в который животные получают самое разнообразные питание
     public static List<Month> monthMostDiferenseEat(List<Entry> entryLists) {
-
+        logger.info(" Поиск месяца, в который животные получают самое разнообразные питание");
         Map<Month, Set<FoodList>> monthWithEat = new HashMap<>();
         for(Month month : Month.values()) {
             monthWithEat.put(month, new HashSet<>());

@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,8 +14,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ReadFile {
+    private static final Logger logger = LogManager.getLogger(ReadFile.class);
 
     public List<Entry> readEntriesFromFile(String fileName) throws URISyntaxException {
+        logger.info("Начало чтения записей из файла.");
         List<Entry> entries;
         URI uri = ClassLoader.getSystemResource(fileName).toURI();
         try(Stream<String> streamFromFiles = Files.lines(Path.of(uri))) {
@@ -28,9 +32,10 @@ public class ReadFile {
                     })
                     .toList();
         } catch (IOException e) {
+            logger.error("Ошибка при чтении файла!\n" + e.getMessage());
             throw new RuntimeException(e);
         }
-
+        logger.info("Записи прочитаны.");
         return entries;
     }
 }
